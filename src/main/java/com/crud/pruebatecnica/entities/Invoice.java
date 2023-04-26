@@ -1,8 +1,10 @@
 package com.crud.pruebatecnica.entities;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -22,5 +24,6 @@ public class Invoice {
     private LocalDate invoiceDate;
     private Boolean status = true; // El campo estado permite que la factura se encuentre anulada o valida
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
     private List<InvoiceDetail> invoiceDetail;
 }

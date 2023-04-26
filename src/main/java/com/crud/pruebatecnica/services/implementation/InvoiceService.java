@@ -17,6 +17,7 @@ public class InvoiceService implements IInvoiceService {
     private InvoiceRepository invoiceRepository;
     @Override
     public List<Invoice> getAllInvoices() {
+        System.out.println("hoa"+invoiceRepository.findAll());
         return invoiceRepository.findAll();
     }
 
@@ -33,7 +34,7 @@ public class InvoiceService implements IInvoiceService {
     @Override
     public Invoice updateInvoice(Long id, Invoice invoice) {
         Invoice findInvoice = getInvoiceById(id);
-        findInvoice.setInvoiceDetail(invoice.getInvoiceDetail());
+        findInvoice.setStatus(invoice.getStatus());
         return invoiceRepository.save(findInvoice);
     }
 
