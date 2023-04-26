@@ -20,6 +20,7 @@ public class Invoice {
     private String invoiceNumber;
     @NotNull(message = "La fecha es obligatoria")
     private LocalDate invoiceDate;
+    private Boolean status = true; // El campo estado permite que la factura se encuentre anulada o valida
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<InvoiceDetail> invoiceDetail;
 }
