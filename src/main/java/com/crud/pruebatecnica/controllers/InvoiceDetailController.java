@@ -4,6 +4,7 @@ import com.crud.pruebatecnica.entities.InvoiceDetail;
 import com.crud.pruebatecnica.services.implementation.InvoiceDetailService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,10 @@ public class InvoiceDetailController {
     }
 
     @PostMapping("/{facturaId}/detallefacturas")
-    public InvoiceDetail createInvoiceDetail(@PathVariable(value = "facturaId") Long facturaId, @Valid @RequestBody InvoiceDetail invoiceDetail) {
-        return invoiceDetailService.createInvoiceDetail(facturaId, invoiceDetail);
+    public ResponseEntity<InvoiceDetail> createInvoiceDetail(@PathVariable(value = "facturaId") Long facturaId, @Valid @RequestBody InvoiceDetail invoiceDetail) {
+        InvoiceDetail invoiceDetailNew = invoiceDetailService.createInvoiceDetail(facturaId, invoiceDetail);
+        return new ResponseEntity<>(invoiceDetailNew, HttpStatus.OK);
+
     }
 
     @PutMapping("/{facturaId}/detallefacturas/{detalleFacturaId}")

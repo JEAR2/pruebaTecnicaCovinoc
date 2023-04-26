@@ -1,6 +1,7 @@
 package com.crud.pruebatecnica.services.implementation;
 
 import com.crud.pruebatecnica.entities.Invoice;
+import com.crud.pruebatecnica.exceptions.BadRequestException;
 import com.crud.pruebatecnica.repositories.InvoiceRepository;
 import com.crud.pruebatecnica.services.interfaces.IInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public Invoice getInvoiceById(Long id) {
-        return invoiceRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Factura no encontrada"));
+        return invoiceRepository.findById(id).orElseThrow(()->new BadRequestException("Id de factura  "+id+" no valido"));
     }
 
     @Override

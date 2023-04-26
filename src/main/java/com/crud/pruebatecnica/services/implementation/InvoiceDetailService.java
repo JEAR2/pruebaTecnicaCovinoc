@@ -2,14 +2,14 @@ package com.crud.pruebatecnica.services.implementation;
 
 import com.crud.pruebatecnica.entities.Invoice;
 import com.crud.pruebatecnica.entities.InvoiceDetail;
+import com.crud.pruebatecnica.exceptions.BadRequestException;
+import com.crud.pruebatecnica.exceptions.ResourceNotFoundException;
 import com.crud.pruebatecnica.repositories.InvoiceDetailRepository;
 import com.crud.pruebatecnica.repositories.InvoiceRepository;
 import com.crud.pruebatecnica.services.interfaces.IInvoiceDetailService;
 import com.sun.jdi.request.InvalidRequestStateException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class InvoiceDetailService implements IInvoiceDetailService {
     @Override
     public InvoiceDetail updateInvoiceDetail(Long invoiceId, Long invoiceDetailId, InvoiceDetail invoiceDetail) {
         Invoice invoice = getInvoiceById(invoiceId);
-        InvoiceDetail findInvoiceDetail = invoiceDetailRepository.findById(invoiceDetailId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Detalle de factura no encontrado"));
+        InvoiceDetail findInvoiceDetail = invoiceDetailRepository.findById(invoiceDetailId).orElseThrow(()->new ResourceNotFoundException("El detalle con id "+invoiceDetailId+"para la factura con id "+invoiceId+" no existe"));
         if (!invoice.getId().equals(findInvoiceDetail.getInvoice().getId())) {
             throw new InvalidRequestStateException("Factura no valida");
         }
@@ -47,7 +47,7 @@ public class InvoiceDetailService implements IInvoiceDetailService {
     @Override
     public void deleteInvoiceDetail(Long invoiceId, Long invoiceDetailId) {
         Invoice invoice = getInvoiceById(invoiceId);
-        InvoiceDetail findInvoiceDetail = invoiceDetailRepository.findById(invoiceDetailId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Detalle de factura no encontrado"));
+        InvoiceDetail findInvoiceDetail = invoiceDetailRepository.findById(invoiceDetailId).orElseThrow(()->new ResourceNotFoundException("El detalle con id "+invoiceDetailId+"para la factura con id "+invoiceId+" no existe"));
         if (!invoice.getId().equals(findInvoiceDetail.getInvoice().getId())) {
             throw new InvalidRequestStateException("Factura no valida");
         }
@@ -56,6 +56,6 @@ public class InvoiceDetailService implements IInvoiceDetailService {
 
 
     private Invoice getInvoiceById(Long id) {
-        return invoiceRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Factura no encontrada"));
+        return invoiceRepository.findById(id).orElseThrow(()->new BadRequestException("Id de factura  "+id+" no valido"));
     }
 }
