@@ -19,7 +19,6 @@ public class InvoiceController {
 
     @GetMapping()
     public List<Invoice> getAllInvoices() {
-        System.out.println("controller "+invoiceService.getAllInvoices());
         return invoiceService.getAllInvoices();
     }
 

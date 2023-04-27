@@ -18,7 +18,6 @@ public class InvoiceService implements IInvoiceService {
     private InvoiceRepository invoiceRepository;
     @Override
     public List<Invoice> getAllInvoices() {
-        System.out.println("hoa"+invoiceRepository.findAll());
         return invoiceRepository.findAll();
     }
 
